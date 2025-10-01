@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>受保护的网页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#1e40af',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .glass-effect {
+                backdrop-filter: blur(10px);
+                background-color: rgba(255, 255, 255, 0.7);
+            }
+            .password-input-focus {
+                @apply focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none;
+            }
+        }
+    </style>
+    <style>
+        
+       .red-text { color: red; }
+       
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans"style="background-color: lightblue;">
+    <!-- 密码验证界面 -->
+    <div id="passwordPrompt" class="flex items-center justify-center min-h-screen p-4 transition-all duration-500">
+        <div class="w-full max-w-md">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all hover:shadow-2xl">
+                <div class="p-8">
+                    <div class="text-center mb-8">
+                        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
+                            <i class="fa fa-lock text-2xl text-primary"></i>
+                        </div>
+                        <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-gray-800">网页受保护</h2>
+                        <p class="text-gray-500 mt-2">请输入密码以访问内容</p>
+                    </div>
+                    
+                    <form id="passwordForm" class="space-y-6">
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+                            <div class="relative">
+                                <input type="password" id="password" 
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 password-input-focus transition-all"
+                                    placeholder="请输入密码" required>
+                                <button type="button" id="togglePassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                    <i class="fa fa-eye-slash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-primary hover:bg-secondary text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center">
+                            <span>解锁访问</span>
+                            <i class="fa fa-arrow-right ml-2"></i>
+                        </button>
+                    </form>
+                    
+                    <div id="errorMessage" class="mt-4 text-center text-red-500 text-sm hidden">
+                        <i class="fa fa-exclamation-circle mr-1"></i>
+                        <span>密码错误，请重试</span>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center text-gray-500 text-sm mt-6">
+                &copy; 2023 受保护的网页
+            </p>
+        </div>
+    </div>
+
+    <!-- 受保护的内容 - 默认隐藏 -->
+    <div id="protectedContent" class="hidden container mx-auto px-4 py-12">
+        <header class="mb-12 text-center">
+            <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold text-gray-800 mb-4">欢迎访问受保护内容</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto">这是只有输入正确密码才能查看的内容区域</p>
+        </header>
+        
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-all">
+                <h2 class="text-xl font-semibold text-gray-800 mb-3">重要信息</h2>
+                <p class="text-gray-600">这是受保护的重要信息内容。只有授权用户才能查看这些敏感数据。</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-all">
+                <h2 class="text-xl font-semibold text-gray-800 mb-3">内部文档</h2>
+                <p class="text-gray-600">这里可以放置需要密码保护的内部文档、私人笔记或其他敏感内容。</p>
+            </div>
+        </div>
+        
+        <div class="mt-12 text-center">
+            <button id="logoutBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-6 rounded-lg transition-all">
+                <i class="fa fa-sign-out mr-2"></i>退出登录
+            </button>
+        </div>
+	<p style="font-size: 64px; text-align: center;">我的各网站及账号</p>
+    <p style="font-size: 40px;">
+        
+    洛谷，<a href="https://www.luogu.com.cn" style="font-size: 40px; color: #2c3e50;">点击跳转</a>
+
+    </p>
+    
+     <p class="red-text">账号：Zhouhqzx17密码：低级</p>
+
+    <p style="font-size: 40px;">
+        
+    共创世界，<a href="https://www.ccw.site" style="font-size: 40px; color: #2c3e50;">点击跳转</a>
+
+    </p>
+
+    <p class="red-text">账号：248292233密码：中级</p>
+  
+    <p style="font-size: 40px;">
+        
+    tailchat，<a href="https://tailchat-nightly.moonrailgun.com" style="font-size: 40px; color: #2c3e50;">点击跳转</a>
+
+    </p>
+
+    <p class="red-text">账号：xxxx@xxxxxxx.com密码：低级</p>
+  
+    <p style="font-size: 40px;">
+        
+    大沥OJ，<a href="http://43.139.147.122" style="font-size: 40px; color: #2c3e50;">点击跳转</a>
+
+    </p>
+
+    <p class="red-text">账号：bd_zhoujinyi密码：低级</p>
+
+    <p style="font-size: 40px;">
+        
+    微信小挂，<a href="http://zly.sit360.cn" style="font-size: 40px; color: #2c3e50;">点击跳转</a>
+
+    </p>
+
+    <p class="red-text">账号：无｝密码：无</p>
+
+    <p style="font-size: 40px;">
+        
+    csp报名网站，<a href="https://cspsjtest.noi.cn/" style="font-size: 40px; color: #2c3e50;">点击跳转</a>
+
+    </p>
+
+    <p class="red-text">账号：Zhouhqzx17密码：低级</p>
+
+    <footer>
+        <div class="footer-content">
+            <!-- 版权信息 - 法律和规范要求 -->
+            <p>&copy; 2025 网站名称. 保留所有权利.</p>
+            
+            <!-- 必要链接 - 合规要求 -->
+            <nav class="footer-nav">
+                <a href="/about">关于我们</a>
+                <a href="/privacy">隐私政策</a>
+                <a href="/terms">使用条款</a>
+                <a href="/contact">联系我们</a>
+            </nav>
+        </div>
+    </footer>
+    </div>
+
+    <script>
+        // 这里设置你的密码（实际应用中应该在服务器端验证）
+        const CORRECT_PASSWORD = "123456"; // 请修改为你的密码
+        
+        // 获取DOM元素
+        const passwordForm = document.getElementById('passwordForm');
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const errorMessage = document.getElementById('errorMessage');
+        const passwordPrompt = document.getElementById('passwordPrompt');
+        const protectedContent = document.getElementById('protectedContent');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        // 切换密码可见性
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // 切换图标
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+        
+        // 处理密码提交
+        passwordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const enteredPassword = passwordInput.value.trim();
+            
+            if (enteredPassword === CORRECT_PASSWORD) {
+                // 密码正确，显示受保护内容
+		
+                passwordPrompt.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    passwordPrompt.classList.add('hidden');
+                    protectedContent.classList.remove('hidden');
+                    // 添加淡入动画
+                    protectedContent.classList.add('animate-fadeIn');
+                }, 500);
+                
+                // 可以在这里添加记住登录状态的逻辑（如localStorage）
+                localStorage.setItem('isAuthenticated', 'true');
+            } else {
+                // 密码错误，显示错误信息并添加抖动动画
+                errorMessage.classList.remove('hidden');
+                passwordInput.classList.add('border-red-500');
+                passwordInput.classList.add('animate-shake');
+                
+                // 移除动画类以便下次可以再次触发
+                setTimeout(() => {
+                    passwordInput.classList.remove('animate-shake');
+                }, 500);
+  		
+            }
+        });
+        
+        // 退出登录功能
+        logoutBtn.addEventListener('click', function() {
+            protectedContent.classList.add('hidden');
+            passwordPrompt.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+            passwordInput.value = '';
+            errorMessage.classList.add('hidden');
+            passwordInput.classList.remove('border-red-500');
+            
+            // 清除登录状态
+            localStorage.removeItem('isAuthenticated');
+        });
+        
+        // 检查是否已登录
+        window.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('isAuthenticated') === 'true') {
+                passwordPrompt.classList.add('hidden');
+                protectedContent.classList.remove('hidden');
+            }
+        });
+        
+        // 添加动画样式
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+            .animate-fadeIn {
+                animation: fadeIn 0.5s ease-out forwards;
+            }
+            .animate-shake {
+                animation: shake 0.5s ease-in-out;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+    
+</body>
+</html>
